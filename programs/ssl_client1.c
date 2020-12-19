@@ -67,8 +67,8 @@ int main( void )
 
 #include <string.h>
 
-#define SERVER_PORT "4433"
-#define SERVER_NAME "localhost"
+#define SERVER_PORT "80"
+#define SERVER_NAME "wikipedia.org"
 #define GET_REQUEST "GET / HTTP/1.0\r\n\r\n"
 
 #define DEBUG_LEVEL 1
@@ -80,8 +80,9 @@ static void my_debug( void *ctx, int level,
 {
     ((void) level);
 
-    mbedtls_fprintf( (FILE *) ctx, "%s:%04d: %s", file, line, str );
-    fflush(  (FILE *) ctx  );
+    //mbedtls_fprintf( (FILE *) ctx, "%s:%04d: %s", file, line, str );
+    //fflush(  (FILE *) ctx  );
+    printf("%s:%04d: %s", file, line, str );
 }
 
 int main( void )
@@ -113,7 +114,7 @@ int main( void )
     mbedtls_ctr_drbg_init( &ctr_drbg );
 
     mbedtls_printf( "\n  . Seeding the random number generator..." );
-    fflush( stdout );
+    //fflush( stdout );
 
     mbedtls_entropy_init( &entropy );
     if( ( ret = mbedtls_ctr_drbg_seed( &ctr_drbg, mbedtls_entropy_func, &entropy,
@@ -130,7 +131,7 @@ int main( void )
      * 0. Initialize certificates
      */
     mbedtls_printf( "  . Loading the CA root certificate ..." );
-    fflush( stdout );
+    //fflush( stdout );
 
     ret = mbedtls_x509_crt_parse( &cacert, (const unsigned char *) mbedtls_test_cas_pem,
                           mbedtls_test_cas_pem_len );
@@ -146,7 +147,7 @@ int main( void )
      * 1. Start the connection
      */
     mbedtls_printf( "  . Connecting to tcp/%s/%s...", SERVER_NAME, SERVER_PORT );
-    fflush( stdout );
+    //fflush( stdout );
 
     if( ( ret = mbedtls_net_connect( &server_fd, SERVER_NAME,
                                          SERVER_PORT, MBEDTLS_NET_PROTO_TCP ) ) != 0 )
@@ -161,7 +162,7 @@ int main( void )
      * 2. Setup stuff
      */
     mbedtls_printf( "  . Setting up the SSL/TLS structure..." );
-    fflush( stdout );
+    //fflush( stdout );
 
     if( ( ret = mbedtls_ssl_config_defaults( &conf,
                     MBEDTLS_SSL_IS_CLIENT,
@@ -199,7 +200,7 @@ int main( void )
      * 4. Handshake
      */
     mbedtls_printf( "  . Performing the SSL/TLS handshake..." );
-    fflush( stdout );
+    //fflush( stdout );
 
     while( ( ret = mbedtls_ssl_handshake( &ssl ) ) != 0 )
     {
@@ -235,7 +236,7 @@ int main( void )
      * 3. Write the GET request
      */
     mbedtls_printf( "  > Write to server:" );
-    fflush( stdout );
+    //fflush( stdout );
 
     len = sprintf( (char *) buf, GET_REQUEST );
 
@@ -255,7 +256,7 @@ int main( void )
      * 7. Read the HTTP response
      */
     mbedtls_printf( "  < Read from server:" );
-    fflush( stdout );
+    //fflush( stdout );
 
     do
     {
@@ -309,10 +310,6 @@ exit:
     mbedtls_ctr_drbg_free( &ctr_drbg );
     mbedtls_entropy_free( &entropy );
 
-#if defined(_WIN32)
-    mbedtls_printf( "  + Press Enter to exit this program.\n" );
-    fflush( stdout ); getchar();
-#endif
 
     return( exit_code );
 }

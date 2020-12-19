@@ -93,7 +93,7 @@ typedef struct{
 #pragma pack(pop)
 
 int socket(int domain, int type, int protocol);
-int close(int socket);
+int closesocket(int socket);
 int bind(int socket, const sockaddr *addres, int addres_len);
 int listen(int socket, int backlog);
 int connect(int socket, const sockaddr* address, int socket_len);

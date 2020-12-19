@@ -1,6 +1,7 @@
 # Also see "include/mbedtls/config.h"
 
 NEWLIB_INCLUDES=D:\KOSSDK\newlib\libc\include
+KOSNET_INCLUDES=../kosnet/include
 
 CC = kos32-gcc
 AR = kos32-ar
@@ -9,7 +10,7 @@ CFLAGS	?= -O2
 WARNING_CFLAGS ?=  -Wall -W -Wdeclaration-after-statement
 LDFLAGS ?=
 
-LOCAL_CFLAGS = $(WARNING_CFLAGS) -I $(NEWLIB_INCLUDES) -I../include -D_FILE_OFFSET_BITS=64
+LOCAL_CFLAGS = $(WARNING_CFLAGS) -I $(NEWLIB_INCLUDES) -I../include -I $(KOSNET_INCLUDES) -D_FILE_OFFSET_BITS=64
 LOCAL_LDFLAGS =
 
 ifdef DEBUG

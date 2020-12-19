@@ -54,7 +54,7 @@ int main() {
 
     freeaddrinfo(addr_info);
 
-    close(sock);
+    closesocket(sock);
     puts("\n goodbye)\n");
 	return 0;
 }

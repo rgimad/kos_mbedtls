@@ -13,7 +13,7 @@ int socket(int domain, int type, int protocol)
     return socket;
 }
  
-int close(int socket)
+int closesocket(int socket)
 {
     int status;
     asm volatile(
