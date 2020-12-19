@@ -1,3 +1,4 @@
+####Notes
 - to prevent compilation error i commented out line 46 in library/timing.c\
     i think mbedtls_timing_hardclock will work in kolibri\
     bit if not so TODO is to rewrite timing.c such way that ll work in kolibri
@@ -7,3 +8,9 @@
     
 - to prevent compilation error i commented out #define MBEDTLS_NET_C in include/mbedtls/config.h\
     TODO rewrite library/net_sockets.c so that it would work in kolibri & uncomment #define MBEDTLS_NET_C in config.h
+
+- in kosnet maybe rename "close" function cause libc already has other "close"
+
+####Other:\
+
+- Order in which you list libs in ldflags matter !
