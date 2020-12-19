@@ -31,6 +31,10 @@
 #ifndef MBEDTLS_CONFIG_H
 #define MBEDTLS_CONFIG_H
 
+#undef _WIN32
+#undef _WIN32_WCE
+#undef _WIN32_WINNT
+
 #if defined(_MSC_VER) && !defined(_CRT_SECURE_NO_DEPRECATE)
 #define _CRT_SECURE_NO_DEPRECATE 1
 #endif
@@ -1162,7 +1166,7 @@
  *
  * Uncomment this macro to disable the built-in platform entropy functions.
  */
-//#define MBEDTLS_NO_PLATFORM_ENTROPY
+#define MBEDTLS_NO_PLATFORM_ENTROPY
 
 /**
  * \def MBEDTLS_ENTROPY_FORCE_SHA256
@@ -2507,7 +2511,7 @@
  *
  * This module provides networking routines.
  */
-#define MBEDTLS_NET_C
+//#define MBEDTLS_NET_C
 
 /**
  * \def MBEDTLS_OID_C

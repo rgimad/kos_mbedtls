@@ -1,0 +1,1 @@
+qemu-system-x86_64 -fda kolibri.img -m 256 -usb -usbdevice tablet
