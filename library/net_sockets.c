@@ -68,7 +68,7 @@
  */
 static int net_prepare( void )
 {
-	/*...*/
+	load_network_obj();
     return( 0 );
 }
 
