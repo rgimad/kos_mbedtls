@@ -67,9 +67,12 @@ int main( void )
 
 #include <string.h>
 
-#define SERVER_PORT "443"
-#define SERVER_NAME "wikipedia.org"
-#define GET_REQUEST "GET / HTTP/1.0\r\n\r\n"
+//#define SERVER_PORT "443"
+//#define SERVER_NAME "wikipedia.org"
+//#define GET_REQUEST "GET / HTTP/1.0\r\n\r\n"
+char SERVER_PORT[16];
+char SERVER_NAME[128];
+char GET_REQUEST[512];
 
 #define DEBUG_LEVEL 1
 
@@ -87,6 +90,12 @@ static void my_debug( void *ctx, int level,
 
 int main( void )
 {
+	puts("Enter SERVER_NAME: ");
+	gets(SERVER_NAME);
+	puts("Enter SERVER_PORT: ");
+	gets(SERVER_PORT);
+	sprintf(GET_REQUEST, "GET / HTTP/1.1\r\nHost: %s\r\n\r\n", SERVER_NAME);
+
     int ret = 1, len;
     int exit_code = MBEDTLS_EXIT_FAILURE;
     mbedtls_net_context server_fd;
