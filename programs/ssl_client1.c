@@ -67,7 +67,7 @@ int main( void )
 
 #include <string.h>
 
-#define SERVER_PORT "80"
+#define SERVER_PORT "443"
 #define SERVER_NAME "wikipedia.org"
 #define GET_REQUEST "GET / HTTP/1.0\r\n\r\n"
 
