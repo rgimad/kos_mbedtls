@@ -90,9 +90,9 @@ static void my_debug( void *ctx, int level,
 
 int main( void )
 {
-	puts("Enter SERVER_NAME: ");
+	puts("Enter SERVER_NAME : ");
 	gets(SERVER_NAME);
-	puts("Enter SERVER_PORT: ");
+	puts("Enter SERVER_PORT : ");
 	gets(SERVER_PORT);
 	sprintf(GET_REQUEST, "GET / HTTP/1.1\r\nHost: %s\r\n\r\n", SERVER_NAME);
 

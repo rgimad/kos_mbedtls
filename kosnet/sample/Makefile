@@ -10,11 +10,7 @@ OBJCOPY=kos32-objcopy
 CCFLAGS=-c -fomit-frame-pointer -I $(NEWLIB_INCLUDES) -I../include -Wall -Wextra
 LDFLAGS=-call_shared -nostdlib --subsystem console -T $(APP_DYNAMIC_LDS) --image-base 0 -L $(LIBDIR) -L ../  -lkosnet -lgcc -lapp -lc.dll
 
-BASH=ubuntu1804 run
-
 all: libkosnet_demo
-	ubuntu1804 run "mcopy -D o -i kolibri.img libkosnet_demo ::libkosnet_demo"
-	qemu-system-x86_64 -fda kolibri.img -m 256 -usb -usbdevice tablet
 
 libkosnet_demo: libkosnet_demo.o
 	$(LD) libkosnet_demo.o -o $(MAIN_TARGET) $(LDFLAGS)
