@@ -34,6 +34,9 @@
 
 #include <string.h>
 
+/*rgimad*/
+#include <stdio.h>
+
 #if defined(MBEDTLS_ENTROPY_C)
 
 #include "mbedtls/entropy.h"
@@ -160,6 +163,144 @@ int mbedtls_platform_entropy_poll( void *data,
 }
 #endif /* _WIN32 && !EFIX64 && !EFI32 */
 #endif /* !MBEDTLS_NO_PLATFORM_ENTROPY */
+
+
+/* -------------------------------------------------------------------------- */
+
+/* entropy sources polls for KolibriOS */
+int mbedtls_sysfn_3_poll( void *data, unsigned char *output, size_t len, size_t *olen )
+{
+    unsigned long kos_time, bcd_sec, bcd_min, bcd_hr, secs, mins, hrs, seconds;
+    ((void) data);
+
+    asm volatile("int $0x40" : "=a"(kos_time) : "a"(3));
+    bcd_sec = (kos_time >> 16);
+    bcd_min = ((kos_time & 0xFF00) >> 8);
+    bcd_hr = (kos_time & 0xFF);
+    secs = ((bcd_sec & 0xF0)>>4)*10 + (bcd_sec & 0x0F);
+    mins = ((bcd_min & 0xF0)>>4)*10 + (bcd_min & 0x0F);
+    hrs = ((bcd_hr & 0xF0)>>4)*10 + (bcd_hr & 0x0F);
+    seconds = hrs*3600 + mins*60 + secs;
+    
+    *olen = 0;
+    if( len < sizeof(unsigned long) )
+        return( 0 );
+
+    memcpy( output, &seconds, sizeof(unsigned long) );
+    *olen = sizeof(unsigned long);
+
+    return( 0 );
+}
+
+
+int mbedtls_sysfn_26_9_poll( void *data, unsigned char *output, size_t len, size_t *olen )
+{
+    unsigned long res;
+    ((void) data);
+
+    asm volatile("int $0x40" : "=a"(res) : "a"(26), "b"(9));
+    *olen = 0;
+
+    if( len < sizeof(unsigned long) )
+        return( 0 );
+
+    memcpy( output, &res, sizeof(unsigned long) );
+    *olen = sizeof(unsigned long);
+
+    return( 0 );
+}
+
+
+int mbedtls_sysfn_14_poll( void *data, unsigned char *output, size_t len, size_t *olen )
+{
+    unsigned long res;
+    ((void) data);
+
+    asm volatile("int $0x40" : "=a"(res) : "a"(14));
+    *olen = 0;
+
+    if( len < sizeof(unsigned long) )
+        return( 0 );
+
+    memcpy( output, &res, sizeof(unsigned long) );
+    *olen = sizeof(unsigned long);
+
+    return( 0 );
+}
+
+
+int mbedtls_sysfn_18_4_poll( void *data, unsigned char *output, size_t len, size_t *olen )
+{
+    unsigned long res;
+    ((void) data);
+
+    asm volatile("int $0x40" : "=a"(res) : "a"(18), "b"(4));
+    *olen = 0;
+
+    if( len < sizeof(unsigned long) )
+        return( 0 );
+
+    memcpy( output, &res, sizeof(unsigned long) );
+    *olen = sizeof(unsigned long);
+
+    return( 0 );
+}
+
+
+int mbedtls_sysfn_37_0_poll( void *data, unsigned char *output, size_t len, size_t *olen )
+{
+    unsigned long res;
+    ((void) data);
+
+    asm volatile("int $0x40" : "=a"(res) : "a"(37), "b"(0));
+    *olen = 0;
+
+    if( len < sizeof(unsigned long) )
+        return( 0 );
+
+    memcpy( output, &res, sizeof(unsigned long) );
+    *olen = sizeof(unsigned long);
+
+    return( 0 );
+}
+
+
+int mbedtls_sysfn_66_3_poll( void *data, unsigned char *output, size_t len, size_t *olen )
+{
+    unsigned long res;
+    ((void) data);
+
+    asm volatile("int $0x40" : "=a"(res) : "a"(66), "b"(3));
+    *olen = 0;
+
+    if( len < sizeof(unsigned long) )
+        return( 0 );
+
+    memcpy( output, &res, sizeof(unsigned long) );
+    *olen = sizeof(unsigned long);
+
+    return( 0 );
+}
+
+
+int mbedtls_sysfn_68_0_poll( void *data, unsigned char *output, size_t len, size_t *olen )
+{
+    unsigned long res;
+    ((void) data);
+
+    asm volatile("int $0x40" : "=a"(res) : "a"(68), "b"(0));
+    *olen = 0;
+
+    if( len < sizeof(unsigned long) )
+        return( 0 );
+
+    memcpy( output, &res, sizeof(unsigned long) );
+    *olen = sizeof(unsigned long);
+
+    return( 0 );
+}
+
+/* -------------------------------------------------------------------------- */
 
 #if defined(MBEDTLS_TEST_NULL_ENTROPY)
 int mbedtls_null_entropy_poll( void *data,

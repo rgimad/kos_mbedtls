@@ -86,6 +86,29 @@ void mbedtls_entropy_init( mbedtls_entropy_context *ctx )
     /* Reminder: Update ENTROPY_HAVE_STRONG in the test files
      *           when adding more strong entropy sources here. */
 
+    /* add KolibriOS entropy sources */
+
+    mbedtls_entropy_add_source( ctx, mbedtls_sysfn_3_poll, NULL,
+                                4, MBEDTLS_ENTROPY_SOURCE_WEAK );
+
+    mbedtls_entropy_add_source( ctx, mbedtls_sysfn_26_9_poll, NULL,
+                                4, MBEDTLS_ENTROPY_SOURCE_WEAK );
+
+    mbedtls_entropy_add_source( ctx, mbedtls_sysfn_14_poll, NULL,
+                                4, MBEDTLS_ENTROPY_SOURCE_WEAK );
+
+    mbedtls_entropy_add_source( ctx, mbedtls_sysfn_18_4_poll, NULL,
+                                4, MBEDTLS_ENTROPY_SOURCE_STRONG );
+
+    mbedtls_entropy_add_source( ctx, mbedtls_sysfn_37_0_poll, NULL,
+                                4, MBEDTLS_ENTROPY_SOURCE_WEAK );
+
+    mbedtls_entropy_add_source( ctx, mbedtls_sysfn_66_3_poll, NULL,
+                                4, MBEDTLS_ENTROPY_SOURCE_WEAK );
+
+    mbedtls_entropy_add_source( ctx, mbedtls_sysfn_68_0_poll, NULL,
+                                4, MBEDTLS_ENTROPY_SOURCE_STRONG );
+
 #if defined(MBEDTLS_TEST_NULL_ENTROPY)
     mbedtls_entropy_add_source( ctx, mbedtls_null_entropy_poll, NULL,
                                 1, MBEDTLS_ENTROPY_SOURCE_STRONG );
@@ -358,6 +381,9 @@ int mbedtls_entropy_func( void *data, unsigned char *output, size_t len )
     {
         if( count++ > ENTROPY_MAX_LOOP )
         {
+            /*for( i = 0; i < ctx->source_count; i++ ) { // rgimad
+                mbedtls_printf("ctx->source[%d].size = %d\n", i, ctx->source[i].size);
+            }*/
             ret = MBEDTLS_ERR_ENTROPY_SOURCE_FAILED;
             goto exit;
         }

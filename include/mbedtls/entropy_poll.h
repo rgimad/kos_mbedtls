@@ -48,6 +48,16 @@ extern "C" {
 #define MBEDTLS_ENTROPY_MIN_HARDWARE     32     /**< Minimum for the hardware source */
 #endif
 
+/* entropy sources polls for KolibriOS */
+int mbedtls_sysfn_3_poll( void *data, unsigned char *output, size_t len, size_t *olen );
+int mbedtls_sysfn_26_9_poll( void *data, unsigned char *output, size_t len, size_t *olen );
+int mbedtls_sysfn_14_poll( void *data, unsigned char *output, size_t len, size_t *olen );
+int mbedtls_sysfn_18_4_poll( void *data, unsigned char *output, size_t len, size_t *olen );
+int mbedtls_sysfn_37_0_poll( void *data, unsigned char *output, size_t len, size_t *olen );
+int mbedtls_sysfn_66_3_poll( void *data, unsigned char *output, size_t len, size_t *olen );
+int mbedtls_sysfn_68_0_poll( void *data, unsigned char *output, size_t len, size_t *olen );
+
+
 /**
  * \brief           Entropy poll callback that provides 0 entropy.
  */
