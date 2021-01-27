@@ -1,14 +1,11 @@
 ##### Notes
-- to prevent compilation error i commented out line 46 and "alarm( seconds );" line in library/timing.c\
-    i think mbedtls_timing_hardclock will work in kolibri\
-    but if not so TODO is to rewrite timing.c such way that ll work in kolibri
 
 - in include/mbedtls/config.h
     - uncommented:\
-              MBEDTLS_TEST_NULL_ENTROPY\
               MBEDTLS_NO_DEFAULT_ENTROPY_SOURCES\
               MBEDTLS_NO_PLATFORM_ENTROPY
     - commented out:\
+              MBEDTLS_TIMING_C\
               MBEDTLS_FS_IO
 
 - following functions deleted because they are NOT neccesary for programs/ssl_client1.c
